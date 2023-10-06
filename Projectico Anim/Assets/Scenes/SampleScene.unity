@@ -1875,6 +1875,14 @@ MonoBehaviour:
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0}
     m_Visible: 1
+  - m_Transform: {fileID: 0}
+    m_Style:
+      shape: {fileID: 4300000, guid: e050c2b16fe384bd994474655a4b4968, type: 2}
+      color: {r: 1, g: 0, b: 1, a: 1}
+      size: 0.1
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0}
+    m_Visible: 1
 --- !u!114 &1490721283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2403,6 +2411,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1751973057}
+  - component: {fileID: 1751973058}
   m_Layer: 0
   m_Name: Target
   m_TagString: Untagged
@@ -2425,6 +2434,20 @@ Transform:
   m_Father: {fileID: 1515783040}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1751973058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1751973056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd559b75b990c9d4fb921251754c03f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Cam: {fileID: 963194227}
+  offset: 2
 --- !u!4 &1758592230 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 234480625599603528, guid: e2c9b10755e8b43428831db91e5d4402, type: 3}
