@@ -1,44 +1,58 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class GoToDestination : MonoBehaviour
 {
-
-    public Transform destination;
-
-    private NavMeshAgent navMeshAgent;
     private Animator animator;
+    public float rotationSpeed = 20f; // Adjust this to control the rotation speed.
+    public float movementSpeed = 3f;  // Adjust this to control the movement speed.
 
-    private void Awake()
+    void Start()
     {
-        navMeshAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
-
-        navMeshAgent.SetDestination(destination.position);
-
     }
 
     void Update()
     {
-        float speed = navMeshAgent.velocity.magnitude / navMeshAgent.speed;
-        animator.SetFloat("speed", speed);
+        bool forwardPressed = Input.GetKey("w");
+        bool backwardPressed = Input.GetKey("s");
+        bool jumpPressed = Input.GetKey("space");
 
-        // Check if the "Space" key is pressed and the character is not already jumping
-        if (Input.GetKey("Space"))
+        // Handle rotation when turning left (A key) or right (D key).
+        float horizontalInput = Input.GetAxis("Horizontal");
+        transform.Rotate(Vector3.up * horizontalInput * rotationSpeed * Time.deltaTime);
+
+        // Handle forward and backward movement.
+        float verticalInput = Input.GetAxis("Vertical");
+        Vector3 movement = transform.forward * verticalInput * movementSpeed * Time.deltaTime;
+        transform.Translate(movement);
+
+        if (forwardPressed)
         {
-            // Trigger the "Jump" animation
-            animator.SetBool("Jump", true);            
-            
+            animator.SetBool("IsRunning", true);
+        }
+        else
+        {
+            animator.SetBool("IsRunning", false);
         }
 
-        if (!Input.GetKey("Space"))
+        if (backwardPressed)
         {
-            // Trigger the "Jump" animation
+            animator.SetBool("IsBackward", true);
+        }
+        else
+        {
+            animator.SetBool("IsBackward", false);
+        }
+
+        if (jumpPressed)
+        {
+            animator.SetBool("Jump", true);
+        }
+        else
+        {
             animator.SetBool("Jump", false);
-
         }
-
     }
 }
