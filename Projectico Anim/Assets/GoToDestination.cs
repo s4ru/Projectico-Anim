@@ -5,45 +5,40 @@ using UnityEngine.AI;
 
 public class GoToDestination : MonoBehaviour
 {
-    public float moveSpeed = 5.0f;
-    public float jumpForce = 7.0f;
-    public Transform groundCheck;
-    public LayerMask groundLayer;
 
+    public Transform destination;
+
+    private NavMeshAgent navMeshAgent;
     private Animator animator;
-    private Rigidbody rb;
-    private bool isGrounded = false;
 
-    private void Start()
+    private void Awake()
     {
+        navMeshAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody>();
+
+        navMeshAgent.SetDestination(destination.position);
+
     }
 
-    private void Update()
+    void Update()
     {
-        // Check if the character is grounded
-        isGrounded = Physics.CheckSphere(groundCheck.position, 0.2f, groundLayer);
+        float speed = navMeshAgent.velocity.magnitude / navMeshAgent.speed;
+        animator.SetFloat("speed", speed);
 
-        // Get input for movement
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
-
-        // Calculate movement direction
-        Vector3 moveDirection = new Vector3(horizontalInput, 0.0f, verticalInput).normalized;
-
-        // Move the character
-        Vector3 movement = moveDirection * moveSpeed * Time.deltaTime;
-        transform.Translate(movement);
-
-        // Set the animator parameters for movement
-        animator.SetFloat("speed", moveDirection.magnitude);
-
-        // Check for jump input and jump if grounded
-        if (isGrounded && Input.GetButtonDown("Jump"))
+        // Check if the "Space" key is pressed and the character is not already jumping
+        if (Input.GetKey("Space"))
         {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            animator.SetTrigger("Jump");
+            // Trigger the "Jump" animation
+            animator.SetBool("Jump", true);            
+            
         }
+
+        if (!Input.GetKey("Space"))
+        {
+            // Trigger the "Jump" animation
+            animator.SetBool("Jump", false);
+
+        }
+
     }
 }
