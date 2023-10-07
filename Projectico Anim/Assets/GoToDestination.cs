@@ -7,10 +7,13 @@ public class GoToDestination : MonoBehaviour
     private Animator animator;
     public float rotationSpeed = 20f; // Adjust this to control the rotation speed.
     public float movementSpeed = 3f;  // Adjust this to control the movement speed.
+    public float jumpForce = 5f;
+    private Rigidbody rb;
 
     void Start()
     {
         animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody>();
     }
 
     void Update()
@@ -49,10 +52,21 @@ public class GoToDestination : MonoBehaviour
         if (jumpPressed)
         {
             animator.SetBool("Jump", true);
+            Jump();
         }
         else
         {
             animator.SetBool("Jump", false);
         }
+
     }
+
+    private void Jump()
+    {
+        if (rb != null)
+        {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
+    }
+
 }
